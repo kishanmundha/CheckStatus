@@ -1,0 +1,190 @@
+<html>
+<head>
+	<meta name="GENERATOR" content="Microsoft Visual Studio 6.0">
+	<meta http-equiv="MSThemeCompatible" content="Yes">
+	<title></title>
+	<style>
+		* HTML DIV.AddressBar
+		{
+			position: absolute;
+			top: expression(eval(document.compatMode && document.compatMode=='CSS1Compat') ? documentElement.scrollTop + (0) : document.body.scrollTop + (0));
+		}
+		
+		* HTML DIV.waitBox
+		{
+			position: absolute;
+			top: expression(eval(document.compatMode && document.compatMode=='CSS1Compat') ? documentElement.scrollTop + (documentElement.clientHeight-this.clientHeight)/2 : document.body.scrollTop + (document.body.clientHeight-this.clientHeight)/2);
+			left: expression(eval(document.compatMode && document.compatMode=='CSS1Compat') ? documentElement.scrollLeft + (documentElement.clientWidth-this.clientWidth)/2 : document.body.scrollLeft + (document.body.clientWidth-this.clientWidth)/2);
+		}
+		input:focus
+		{
+			background-color: yellow;
+		}
+		body
+		{
+			font-family: Segoe UI;
+		}
+		input
+		{
+			font-family: Segoe UI;
+		}
+		table
+		{
+			font-family: Segoe UI;
+			font-size: 12;
+			cursor: default;
+		}
+		.over
+		{
+			border: 15px solid black;
+		}
+		.out
+		{
+			border: 15px solid black;
+		}
+	</style>
+
+	<script src="HD script.js"></script>
+
+	<script src="HD Function.js"></script>
+
+	<script>
+		function go_link_mouse(p) {
+			event.srcElement.style.backgroundPositionY = -(p * 25);
+		}
+	</script>
+
+</head>
+<body bgcolor="#fdfdfd" onscroll="setWaitPosition();" onload="init()" onselectstart="event.returnValue=false">
+	<div class="AddressBar" style="background: white;">
+		<table>
+			<tr>
+				<td>
+					<div style="background: URL('Graphics/explorer-prev-buttons.png') 0PX -25PX; width: 25;
+						height: 25;" onmouseover="go_link_mouse(2)" onmouseout="go_link_mouse(1)" onmousedown="go_link_mouse(3)"
+						onmouseup="go_link_mouse(1)" onclick="goBack()">
+					</div>
+				</td>
+				<td style="width: 100%">
+					<div style="width: 100%">
+						<table cellpadding="0" cellspacing="0" style="width: 100%">
+							<tr>
+								<td style="width: 100%">
+									<input type="TEXT" id="loc_path" value="" onkeypress="if(event.keyCode==13) load()"
+										style="width: 100%;">
+								</td>
+								<td>
+									<div style="background: #DDDDFF
+										URL('Graphics/buttonDown_On.png')
+										-1PX
+										1PX
+										NO-REPEAT; width: 15; height: 23; border-top: 1PX SOLID #7F9DB9; border-bottom: 1PX SOLID #7F9DB9;
+										border-right: 1PX SOLID #7F9DB9;" onclick="ShowDriveList()">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td style="width: 100%">
+									<table id="DriveList" cellpadding="3" cellspacing="0" onblur="" onclick="this.style.visibility='hidden'"
+										style="visibility: HIDDEN; position: ABSOLUTE; background: WHITE; width: 100%;
+										border: 1PX
+									SOLID #7F9DB9; margin-top: -2;">
+									</table>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</td>
+				<td>
+					<div style="background: URL('Graphics/explorer-next-buttons.png') 0PX -25PX; width: 25;
+						height: 25;" onmouseover="go_link_mouse(2)" onmouseout="go_link_mouse(1)" onmousedown="go_link_mouse(3)"
+						onmouseup="go_link_mouse(1)" onclick="load()">
+					</div>
+				</td>
+			</tr>
+		</table>
+		<hr>
+		<div style="width: 98%; margin-top: -10;">
+			<hr style="width: 100%; text-align: left; height: 10; color: white; background: white;
+				border: 1px solid blue;">
+			<hr id="memory_bar" style="width: 0%; text-align: left; height: 8; color: blue; background: blue;
+				margin-top: -23;">
+		</div>
+	</div>
+	<center style="margin-top: 80;">
+		<table id="table1" border="1" bordercolor="#dddddd" style="width: 90%; border-collapse: collapse;">
+			<tr>
+				<td style="width: 20;">
+					<input type="checkbox" onclick="checkAll(this)">
+				</td>
+				<td style="width: 40%;">
+					<b>Item</b>
+				</td>
+				<td style="width: 10%;">
+					<b>A</b>
+				</td>
+				<td style="width: 20%;">
+					<b>Type</b>
+				</td>
+				<td style="width: 20%; text-align: center">
+					<b>Size</b>
+				</td>
+				<td style="width: 15%; text-align: center">
+					<b>Status</b>
+				</td>
+			</tr>
+		</table>
+	</center>
+	<div id="waitBox" class="waitBox" style="visibility: hidden; border: 3px solid #ccccff;
+		width: 330; height: 70; background: white">
+		<br>
+		<center id="waitMsg" style="font-family: calibri; font-size: 16; font-weight: bold;">
+		</center>
+		<div id="Process_Div">
+		</div>
+		<br>
+	</div>
+	<div id="overLayer" onclick="ContextFile.style.visibility='hidden'; overLayer.style.visibility='hidden';"
+		oncontextmenu="event.returnValue=false;" style="visibility: hidden; position: absolute;
+		filter: alpha(opacity=5); left: 0%; top: 0%; background: black; width: 100%;
+		height: 95%;">
+	</div>
+	<div id="ContextFile" style="position: absolute; visibility: hidden; left: -2000;
+		top: -2000; background: white;">
+		<table border="1" bordercolor="#dddddd" style="width: 200; border-collapse: collapse;">
+			<tr class="out" onmouseover="mouseOver()" onmouseout="mouseOut()" id="FileOpen" onclick="OpenFolder()">
+				<td>
+					&nbsp;&nbsp;Open
+				</td>
+			</tr>
+			<tr class="out" onmouseover="mouseOver()" onmouseout="mouseOut()" id="FileExplorer"
+				onclick="FolderExplorer()">
+				<td>
+					&nbsp;&nbsp;Explorer
+				</td>
+			</tr>
+			<tr class="out" onmouseover="mouseOver()" onmouseout="mouseOut()" id="OpenContain"
+				onclick="OpenContainF()">
+				<td>
+					&nbsp;&nbsp;Open Contain Folder
+				</td>
+			</tr>
+			<tr class="out" onmouseover="mouseOver()" onmouseout="mouseOut()" onclick="deleteItem()">
+				<td>
+					&nbsp;&nbsp;Delete
+				</td>
+			</tr>
+			<tr class="out" onmouseover="mouseOver()" onmouseout="mouseOut()" onclick="deleteMarked()">
+				<td>
+					&nbsp;&nbsp;Delete Marked
+				</td>
+			</tr>
+			<tr class="out" onmouseover="mouseOver()" onmouseout="mouseOut()" onclick="ContextFile.style.visibility='hidden';  overLayer.style.visibility='hidden'; PathContext = null;">
+				<td>
+					&nbsp;&nbsp;Cancle
+				</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>
